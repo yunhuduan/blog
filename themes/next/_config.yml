@@ -634,7 +634,7 @@ three_waves: false
 # canvas_lines
 canvas_lines: false
 
-# canvas_sphere
+# canvas_sphere 背景有动画效果
 canvas_sphere: true
 
 # Only fit scheme Pisces
