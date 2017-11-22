@@ -84,8 +84,9 @@ chai(本文主要和这个有暧昧),
 chai中的断言又区分两种style分别是:BDD(行为驱动开发),TDD(测试驱动开发),具体文档查看[这里][3],
 chai中断言包含:expect(BDD),should(BDD),assert(TDD)
 
-### 5.chai断言库assert
-#### 1.新建文件*chaiAssert.test.js*来简单使用下assert
+### 5.chai断言库
+#### 5.1 chai断言库之assert
+##### 5.1.1 新建文件*test/chaiAssert.test.js*来简单使用下assert
 ```javascript
 var assert = require('chai').assert
   , foo = 'bar'
@@ -109,10 +110,261 @@ describe('chai assert test',function(){
 	})
 });
 ```
-执行命令: mocha 查看输出结果
+##### 5.1.2 执行命令: mocha 查看输出结果
+```shell
+mocha test/chaiAssert.test.js
 
-	
+  chai assert test
+    ✓ it string
+    ✓ it string optional message
+    ✓ foo equal bar
+    ✓ foo length is 3
+    ✓ it beverages lengh is 3
 
+  5 passing (13ms)
+```
+#### 5.2 chai断言库之expect
+##### 5.2.1 新建文件*test/chaiExpect.test.js*
+```javascript
+
+var expect = require('chai').expect;
+
+describe('expect equal',function(){
+	it('basic data type',function () {
+		expect(1).to.equal(1);
+		expect('foo').to.equal('foo');
+	});
+	it('object data deep equal',function () {
+		expect({a:1}).to.deep.equal({a:1});
+		expect({a:1}).to.not.equal({a:1});
+
+	});
+});
+
+describe('expect eql(deep equal)',function () {
+	it('expect({a: 1}).to.eql({a: 1}).but.not.equal({a: 1});',function () {
+		expect({a: 1}).to.eql({a: 1}).but.not.equal({a: 1});
+	});
+});
+
+describe('expect not suit', function () {
+	it('[0,1,2,3].indexOf(3).to.not.equal(2)', function () {
+		expect([0, 1, 2, 3].indexOf(3)).to.not.equal(2)
+	});
+	it('expect(function () {}).to.not.throw()', function () {
+		expect(function () {
+		}).to.not.throw();
+	});
+	it('expect({a: 1}).to.not.have.property(\'b\')', function () {
+		expect({a: 1}).to.have.property('a');
+	});
+	it('expect([1, 2]).to.be.an(\'array\').that.does.not.include(3)', function () {
+		expect([1, 2]).to.be.an('array').that.does.not.include(3);
+	});
+});
+
+describe('expect deep suit',function(){
+	it('expect({a:1}).to.deep.equal({a:1})',function () {
+		expect({a:1}).to.deep.equal({a:1});
+		expect({a: 1}).to.not.equal({a: 1});
+	});
+
+	it('expect([{a: 1}]).to.deep.include({a: 1})',function () {
+		expect([{a: 1}]).to.deep.include({a: 1});
+		expect([{a: 1}]).to.not.include({a: 1});
+		expect({x: {a: 1}}).to.deep.include({x: {a: 1}});
+		expect({x: {a: 1}}).to.not.include({x: {a: 1}});
+	});
+
+});
+```
+##### 5.2.2 执行命令:mocha test/chaiExpect.test.js (自行查看下输出)
+以上就是常用的chai断言,更多断言使用请自行chai官网查看,不过比较慢可能需要翻墙
+
+### 6.异步代码
+异步代码执行中需要在it的function中接收传入的函数(这里是**done**),在异步操作完成的时候调用done函数.
+如果当异步执行代码时间过长需要设置下当前测试超时时间
+```javascript
+var expect = require('chai').expect;
+describe('ASYNCHRONOUS CODE test', function () {
+	this.timeout(5000);//异步时超时时间设置
+	it('settime out with asynchronous test', function (done) {
+		setTimeout(function () {
+			expect(1).to.be.equal(1);
+			done();//异步时需要手动调用回调
+		}, 2000)
+	});
+});
+```
+### 7.与promise一起使用
+当与promise一起使用时it中的函数返回promise来代替**done()** 的回调
+```javascript
+beforeEach(function() {
+  return db.clear()
+    .then(function() {
+      return db.save([tobi, loki, jane]);
+    });
+});
+
+describe('#find()', function() {
+  it('respond with matching records', function() {
+    return db.find({ type: 'User' }).should.eventually.have.length(3);
+  });
+});
+```
+在Mocha v3.00或者更新版本,返回一个*promise*并且调用 _done()_的回调函数会抛出异常,异常如下:
+
+`Error: Resolution method is overspecified. Specify a callback *or* return a Promise; not both.`
+错误代码如下(只要去掉then部分及it的函数中入参done即可正常运行):
+```javascript
+var expect = require('chai').expect;
+it('should complete this test', function (done) {
+	return new Promise(function (resolve) {
+		expect(true).to.be.true
+		resolve();
+	}).then(function() {
+		done()
+	});
+});
+```
+### 8.mocha中的回调
+mocha提供了默认的"BDD"风格的回调: before(), after(), beforeEach(), afterEach().这些通常使用在测试前置的条件设置和测试完成后清理等
+```javascript
+describe('hooks test', function () {
+	var curTime = new Date().getTime();
+	var totalStart = curTime;
+	var totalEnd = curTime;
+
+	var eachStart = curTime;
+	var eachEnd = curTime;
+
+	before(function () {
+		// runs before all tests in this block
+		totalStart = new Date().getTime();
+		console.log('所有的测试开始前调用:' + totalStart);
+	});
+
+	after(function () {
+		// runs after all tests in this block
+		totalEnd = new Date().getTime();
+		console.log('所有的测试结束后调用:' + totalEnd + ',total cost time:' + (totalEnd - totalStart));
+	});
+
+	beforeEach(function () {
+		// runs before each test in this block
+		eachStart = new Date().getTime();
+		console.log('每个测试it的测试前调用:' + eachStart);
+	});
+
+	afterEach(function () {
+		// runs after each test in this block
+		eachEnd = new Date().getTime();
+		console.log('每个测试it的测试后调用:' + eachEnd + ',cost time:' + (eachEnd - eachStart));
+		console.log('===========================我是分割线============================================')
+	});
+
+	it('basic data type', function () {
+		expect(1).to.equal(1);
+		expect('foo').to.equal('foo');
+	});
+	it('object data deep equal', function () {
+		expect({a: 1}).to.deep.equal({a: 1});
+		expect({a: 1}).to.not.equal({a: 1});
+
+	});
+});
+```
+### 9.mocha回调描述
+所有回调都有个可选项 _description_,描述信息可以在测试发生错误时准确的提示出来.如果没有描述回调函数是非匿名函数(就是有个名字)同样会当成description
+```javascript
+beforeEach(function() {
+  // beforeEach hook
+});
+beforeEach(function namedFun() {
+  // beforeEach:namedFun
+});
+beforeEach('some description', function() {
+  // beforeEach:some description
+});
+```
+### 10.mocha异步回调
+所有的回调(before(), after(), beforeEach(), afterEach())可能是同步或者异步,例如你希望在所有测试开始前使用模拟数据录入到数据库中:
+```javascript
+describe('Connection', function() {
+  var db = new Connection,
+    tobi = new User('tobi'),
+    loki = new User('loki'),
+    jane = new User('jane');
+
+  beforeEach(function(done) {
+    db.clear(function(err) {
+      if (err) return done(err);
+      db.save([tobi, loki, jane], done);
+    });
+  });
+
+  describe('#find()', function() {
+    it('respond with matching records', function(done) {
+      db.find({type: 'User'}, function(err, res) {
+        if (err) return done(err);
+        res.should.have.length(3);
+        done();
+      });
+    });
+  });
+});
+```
+### 11.根级回调
+你可以选择任何文件添加根级回调.例如:添加 _beforeEach()_ 在所有的*describe()*块以外,那么所有的test case 开始执行之前都会调用 _beforeEach()_ 回调函数.
+这是因为在mocha测试框架中存在一个隐含的根级 _describe()_ 块,被称为"root suite"
+
+### 12.动态生成测试用例
+
+```javascript
+describe('DYNAMICALLY GENERATING TESTS', function () {
+	function add() {
+		return Array.prototype.slice.call(arguments).reduce(function (prev, curr) {
+			return prev + curr;
+		}, 0);
+	}
+	var tests = [
+		{args: [1, 2], expected: 3},
+		{args: [1, 2, 3], expected: 6},
+		{args: [1, 2, 3, 4], expected: 10}
+	];
+	tests.forEach(function (test) {
+		it('correctly adds ' + test.args + ' args', function () {
+			var res = add.apply(null, test.args);
+			expect(res).to.be.equal(test.expected);
+		});
+	});
+
+});
+```
+
+### 13.mocha测试报告
+mocha的测试报告可以使用命令: mocha --reporters 查看所有内置的报告
+```html
+    dot - dot matrix
+    doc - html documentation
+    spec - hierarchical spec list
+    json - single json object
+    progress - progress bar
+    list - spec-style listing
+    tap - test-anything-protocol
+    landing - unicode landing strip
+    xunit - xunit reporter
+    min - minimal reporter (great with --watch)
+    json-stream - newline delimited json events
+    markdown - markdown documentation (github flavour)
+    nyan - nyan cat!
+```
+mocha还可以安装其他的第三方的报告插件,如:mochawesome
+```shell
+npm install --save-dev mochawesome
+
+mocha --reporter mochawesome
+```
 
 
   [1]: http://mochajs.org
