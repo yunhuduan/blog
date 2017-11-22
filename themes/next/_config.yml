@@ -63,7 +63,8 @@ footer:
 canonical: true
 
 # Change headers hierarchy on site-subtitle (will be main site description) and on all post/pages titles for better SEO-optimization.
-seo: false
+#seo: false
+seo: true
 
 # If true, will add site-subtitle to index page, added in main hexo config.
 # subtitle: Subtitle
@@ -114,8 +115,9 @@ scheme: Gemini
 # Key is the link label showing to end users.
 # Value before `||` delimeter is the target permalink.
 # Value after `||` delimeter is the name of FontAwesome icon. If icon (with or without delimeter) is not specified, globe icon will be loaded.
-#social:
-  #GitHub: https://github.com/yourname || github
+social:
+  GitHub: https://github.com/yunhuduan || github
+  微博: https://weibo.com/u/2181859722
   #E-Mail: mailto:yourname@gmail.com || envelope
   #Google: https://plus.google.com/yourname || google
   #Twitter: https://twitter.com/yourname || twitter
@@ -130,6 +132,7 @@ social_icons:
   enable: true
   icons_only: false
   transition: false
+  微博: weibo
 
 # Blog rolls
 #links_title: Links
@@ -229,8 +232,8 @@ post_wordcount:
   #description: ex. subscribe to my blog by scanning my public wechat account
 
 # Reward
-#reward_comment: Donate comment here
-#wechatpay: /images/wechatpay.jpg
+reward_comment: 坚持原创技术分享,谢谢您的鼓励!
+wechatpay: /images/wechat-reward.jpeg
 #alipay: /images/alipay.jpg
 #bitcoin: /images/bitcoin.png
 

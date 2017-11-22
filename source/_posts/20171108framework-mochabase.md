@@ -1,7 +1,13 @@
 ---
 title: 测试框架-mocha入门(1)
 date: 2017-11-08 23:34:40
-tags: [testframework,test,mocha]
+tags: 
+	- testframework
+	- test
+	- mocha
+categories:
+	- test
+	- mocha
 ---
 
 ### 1. 官方简介
@@ -17,6 +23,8 @@ Mocha tests run serially, allowing for flexible and accurate reporting,
     另外据说是比较流行的测试框架(原谅我是个随波逐流的人^ _^).
     
 所谓"测试框架"，就是运行测试的工具。通过它，可以为JavaScript应用添加测试，从而保证代码的质量。本文全面介绍如何使用Mocha。如果你以前对测试一无所知，本文也可以当作JavaScript单元测试入门。值得说明的是，除了Mocha以外，类似的测试框架还有Jasmine,Tape,QUnit等，也可以去学习。
+
+<!-- more -->
 
 ### 2.安装 
 
@@ -359,7 +367,7 @@ mocha的测试报告可以使用命令: mocha --reporters 查看所有内置的�
     markdown - markdown documentation (github flavour)
     nyan - nyan cat!
 ```
-mocha还可以安装其他的第三方的报告插件,如:mochawesome
+mocha还可以安装其他的第三方的报告插件,如:mochawesome,运行如下命令后会在项目目录下生成报告文件夹.
 ```shell
 npm install --save-dev mochawesome
 

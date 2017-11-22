@@ -1,7 +1,11 @@
 ---
 title: nginx安装
 date: 2017-10-25 23:34:13
-tags: httpServer
+tags: 
+	- httpServer
+categories:
+	- server
+	- nginx
 ---
 #### 1.官网下载
 1.直接下载.tar.gz安装包，地址：https://nginx.org/en/download.html
@@ -20,6 +24,8 @@ cd nginx-1.12.2
 ./configure
 ```
 以上命令执行后会坚持当前环境的依赖,如果有未安装的包请安装好第4步骤中执行安装
+
+<!-- more -->
 
 #### 4.依赖环境包安装
 
