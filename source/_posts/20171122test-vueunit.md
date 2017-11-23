@@ -388,6 +388,7 @@ export default new Router({
 1. 运行命令: `npm run dev` 
 2. 打开浏览器输入: http://localhost:8080/todo ,查看当前demo运行结果
 
+本文的代码在github[这里][3]
 更多关于vue的测试以后再深入,后期逐步引入 vue-router,vuex,sinon等进行测试简单的测试到目前为止
 
 
@@ -396,3 +397,4 @@ export default new Router({
 
 [1]: https://vue-test-utils.vuejs.org/zh-cn/
 [2]: https://curated.vuejs.org/
+[3]: https://github.com/yunhuduan/vuetest
