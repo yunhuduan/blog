@@ -10,7 +10,7 @@ categories:
 	- mocha
 ---
 
-### 1. 官方简介
+### 官方简介
 
 > **[Mocha][1]** is a feature-rich JavaScript test framework running on Node.js and in the browser, 
 making asynchronous testing simple and fun. 
@@ -26,7 +26,7 @@ Mocha tests run serially, allowing for flexible and accurate reporting,
 
 <!-- more -->
 
-### 2.安装 
+### 安装 
 
 ``` shell
 npm install --global mocha
@@ -35,7 +35,7 @@ npm install --global mocha
 ```shell
 npm install --save-dev mocha
 ```
-### 3.新建项目
+### 新建项目
 
 ```shell
 npm init
@@ -73,7 +73,7 @@ mocha
 - **it**: 称为"测试用例"（test case）
 - 以上两个方法中第一个都是描述,第二个参数是实际运行测试的function
 
-### 4.断言库
+### 断言库
 
 所谓"断言"，就是判断源码的实际执行结果与预期结果是否一致，如果不一致就抛出一个错误。
 所有的测试用例（it块）都应该含有一句或多句的断言。它是编写测试用例的关键。
@@ -92,9 +92,9 @@ chai(本文主要和这个有暧昧),
 chai中的断言又区分两种style分别是:BDD(行为驱动开发),TDD(测试驱动开发),具体文档查看[这里][3],
 chai中断言包含:expect(BDD),should(BDD),assert(TDD)
 
-### 5.chai断言库
-#### 5.1 chai断言库之assert
-##### 5.1.1 新建文件*test/chaiAssert.test.js*来简单使用下assert
+### chai断言库
+#### chai断言库之assert
+##### 新建文件*test/chaiAssert.test.js*来简单使用下assert
 ```javascript
 var assert = require('chai').assert
   , foo = 'bar'
@@ -118,7 +118,7 @@ describe('chai assert test',function(){
 	})
 });
 ```
-##### 5.1.2 执行命令: mocha 查看输出结果
+##### 执行命令: mocha 查看输出结果
 ```shell
 mocha test/chaiAssert.test.js
 
@@ -131,8 +131,8 @@ mocha test/chaiAssert.test.js
 
   5 passing (13ms)
 ```
-#### 5.2 chai断言库之expect
-##### 5.2.1 新建文件*test/chaiExpect.test.js*
+#### chai断言库之expect
+##### 新建文件*test/chaiExpect.test.js*
 ```javascript
 
 var expect = require('chai').expect;
@@ -186,10 +186,10 @@ describe('expect deep suit',function(){
 
 });
 ```
-##### 5.2.2 执行命令:mocha test/chaiExpect.test.js (自行查看下输出)
+##### 执行命令:mocha test/chaiExpect.test.js (自行查看下输出)
 以上就是常用的chai断言,更多断言使用请自行chai官网查看,不过比较慢可能需要翻墙
 
-### 6.异步代码
+### 异步代码
 异步代码执行中需要在it的function中接收传入的函数(这里是**done**),在异步操作完成的时候调用done函数.
 如果当异步执行代码时间过长需要设置下当前测试超时时间
 ```javascript
@@ -204,7 +204,7 @@ describe('ASYNCHRONOUS CODE test', function () {
 	});
 });
 ```
-### 7.与promise一起使用
+### 与promise一起使用
 当与promise一起使用时it中的函数返回promise来代替**done()** 的回调
 ```javascript
 beforeEach(function() {
@@ -235,7 +235,7 @@ it('should complete this test', function (done) {
 	});
 });
 ```
-### 8.mocha中的回调
+### mocha中的回调
 mocha提供了默认的"BDD"风格的回调: before(), after(), beforeEach(), afterEach().这些通常使用在测试前置的条件设置和测试完成后清理等
 ```javascript
 describe('hooks test', function () {
@@ -282,7 +282,7 @@ describe('hooks test', function () {
 	});
 });
 ```
-### 9.mocha回调描述
+### mocha回调描述
 所有回调都有个可选项 _description_,描述信息可以在测试发生错误时准确的提示出来.如果没有描述回调函数是非匿名函数(就是有个名字)同样会当成description
 ```javascript
 beforeEach(function() {
@@ -295,7 +295,7 @@ beforeEach('some description', function() {
   // beforeEach:some description
 });
 ```
-### 10.mocha异步回调
+### mocha异步回调
 所有的回调(before(), after(), beforeEach(), afterEach())可能是同步或者异步,例如你希望在所有测试开始前使用模拟数据录入到数据库中:
 ```javascript
 describe('Connection', function() {
@@ -322,11 +322,11 @@ describe('Connection', function() {
   });
 });
 ```
-### 11.根级回调
+### 根级回调
 你可以选择任何文件添加根级回调.例如:添加 _beforeEach()_ 在所有的*describe()*块以外,那么所有的test case 开始执行之前都会调用 _beforeEach()_ 回调函数.
 这是因为在mocha测试框架中存在一个隐含的根级 _describe()_ 块,被称为"root suite"
 
-### 12.动态生成测试用例
+### 动态生成测试用例
 
 ```javascript
 describe('DYNAMICALLY GENERATING TESTS', function () {
@@ -350,7 +350,7 @@ describe('DYNAMICALLY GENERATING TESTS', function () {
 });
 ```
 
-### 13.mocha测试报告
+### mocha测试报告
 mocha的测试报告可以使用命令: mocha --reporters 查看所有内置的报告
 ```html
     dot - dot matrix
@@ -367,7 +367,7 @@ mocha的测试报告可以使用命令: mocha --reporters 查看所有内置的�
     markdown - markdown documentation (github flavour)
     nyan - nyan cat!
 ```
-mocha还可以安装其他的第三方的报告插件,如:mochawesome,运行如下命令后会在项目目录下生成报告文件夹.
+以上mocha的报告可以自行一一试下,mocha还可以安装其他的第三方的报告插件,如:mochawesome,运行如下命令后会在项目目录下生成报告文件夹.
 ```shell
 npm install --save-dev mochawesome
 
