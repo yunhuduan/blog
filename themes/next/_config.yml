@@ -144,7 +144,7 @@ social_icons:
 # Sidebar Avatar
 # in theme directory(source/images): /images/avatar.gif
 # in site  directory(source/uploads): /uploads/avatar.gif
-avatar: https://static.oschina.net/uploads/user/109/218583_100.jpeg
+avatar: /images/head-img.jpeg
 
 # Table Of Contents in the Sidebar
 toc:
