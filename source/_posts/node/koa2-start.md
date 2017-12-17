@@ -16,6 +16,7 @@ koa2安装建议安装到实际的项目中
 ```shell
 	npm install --save-dev koa
 ```
+
 <!-- more -->
 ### 使用 Babel 实现 Async 方法
 要在 node < 7.6 版本的 Koa 中使用 async 方法, 我们推荐使用 [babel's require hook][1].
