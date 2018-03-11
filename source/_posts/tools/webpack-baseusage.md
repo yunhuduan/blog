@@ -19,6 +19,7 @@ categories:
 ```bash
 	npm install --save-dev webpack@3.6
 ```
+<!-- more -->
 ### 建立项目基本结构
 项目基本结构如下:
 ```text
@@ -63,5 +64,5 @@ module.exports = {
 npm run build
 ```
 这时项目的根目录中生成dist文件夹app.js文件内容为webpack编译后的内容,编译后的内容中存在webpack运行时代码和我们自己编写的代码
-
+### 
 
