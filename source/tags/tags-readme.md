@@ -6,5 +6,6 @@
 	vue,
 	postcss,
 	css处理器,
-	webpack
+	webpack,
+	eslint
 	

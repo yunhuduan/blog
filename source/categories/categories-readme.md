@@ -14,5 +14,6 @@
 		
 	tools
 		webpack
+		eslint
 	
 	
