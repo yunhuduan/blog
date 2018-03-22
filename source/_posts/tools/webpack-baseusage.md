@@ -1,5 +1,5 @@
 ---
-title: webpack3.x基本使用
+title: webpack3.x入门(2)-基本使用
 date: 2018-03-10 22:34:19
 tags: 
 	- webpack
@@ -24,13 +24,11 @@ categories:
 项目基本结构如下:
 ```text
 webpack-demo
---src
-----lib
+--simple
 ----app.js
---index.html
---webpack.conf.js
+----index.html
+----webpack.conf.js
 ```
-- lib目录:存放其他js文件
 - app.js:入口文件
 - webpack.conf.js:webpack配置文件
 
@@ -44,27 +42,26 @@ document.getElementById('test').innerHTML = 'hello';
 const path = require('path');
 var webpack = require('webpack');
 
+// 在根目录下执行命令 ../node_modules/.bin/webpack --config  webpack.config.js
 module.exports = {
 	entry: {
-		app: "./src/app.js"
+		app: "./app.js"
 	},
 	output: {
 		path: path.resolve(__dirname, "dist"),
-		filename: "[name].js",
-		chunkFilename: "[chunkhash].js",
-		publicPath: "/"
+		filename: "[name].js"
 	},
 	plugins: [
 
-	],
+	]
 }
 ```
-打开package.json script中添加**"build": "node_modules/.bin/webpack --config  webpack.config.js"**
 运行命令:
 ```bash
-npm run build
+../node_modules/.bin/webpack --config  webpack.config.js
 ```
-这时项目的根目录中生成dist文件夹app.js文件内容为webpack编译后的内容,编译后的内容中存在webpack运行时代码和我们自己编写的代码
+这时项目的simple目录中生成dist文件夹app.js文件内容为webpack编译后的内容,编译后的内容中存在**webpack运行时代码**和我们自己编写的代码
+
 ### 配置项
 以下是从官网拔下来常用的配置选项
 ```javascript
