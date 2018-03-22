@@ -35,7 +35,10 @@ webpack-demo
 ## 基本配置
 我们编写下app.js中的文件内容如下:
 ```javascript
-document.getElementById('test').innerHTML = 'hello';
+var p = document.createElement('p');
+p.innerHTML = "hello webpack";
+p.setAttribute("id", "test");
+document.body.appendChild(p);
 ```
 下面来配置webpack,我们先从简单的输入输出开始,配置如下:
 ```javascript
