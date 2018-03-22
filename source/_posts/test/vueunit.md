@@ -8,14 +8,14 @@ categories:
 	- test
 	- vue
 ---
-### 缘起
+## 缘起
 
 > 目前团队中使用vue开发有一段时间了,但是对于通用组件也好业务组件也罢,总感觉在质量上心里有点不放心或者说从近期几个项目来看在测试阶段还是有很多没必要的bug提出来.
 于是乎有点闲暇时间来研究下vue的单元测试了,vue的脚手架生成工具其实已经内置了单元测试和端到端的测试.我们先从单元测试一步步来最后再到端到端的测试,
 毕竟技术比较关心的还是单元测试.对于vue的单元测试目前比较推荐的还是使用官方的测试工具:[vue-test-utils][1],当然还有其他的一些测试工具或者库您可以到[这里][2]去搜索.
 下面我们来新建一个项目来一步步编写单元测试
 
-### vue脚手架生成项目
+## vue脚手架生成项目
 运行命令:`vue init webpack vuetest`
 ```html
  A newer version of vue-cli is available.
@@ -48,13 +48,13 @@ categories:
 
 <!-- more -->
 
-### 安装依赖
+## 安装依赖
 
 ```shell
 npm install 
 npm install --save-dev vue-test-utils
 ```
-### eslint规则修改
+## eslint规则修改
 添加如下规则到项目根目录下的.eslintrc.js,根据个人习惯这步骤可以自行处理决定自己的规则
 ```text
 // 通用空格一致
@@ -83,8 +83,8 @@ npm install --save-dev vue-test-utils
 //禁止使用new Function
 "no-new-func": 0
 ```
-### TodoList组件编写
-#### 基本组件列表如下:
+## TodoList组件编写
+### 基本组件列表如下:
 ```text
 |- src
     |- components
@@ -92,8 +92,8 @@ npm install --save-dev vue-test-utils
         |- TodoList.vue
         |- TodoItem.vue
 ```
-#### 组件及测试代码如下:
-##### TodoItem.vue组件
+### 组件及测试代码如下:
+#### TodoItem.vue组件
 ```text
 <template>
 	<div class="todo-item">
@@ -141,7 +141,7 @@ npm install --save-dev vue-test-utils
 	}
 </style>
 ```
-##### TodoItem.vue测试用例
+#### TodoItem.vue测试用例
 在test/unit/specs 目录下新建文件TodoItem.spec.js内容如下:
 ```javascript
 import TodoItem from '@/components/TodoItem'
@@ -187,7 +187,7 @@ describe('TodoItem.vue', () => {
 ide会自动执行当前karma命令
 
 
-##### TodoList.vue组件
+#### TodoList.vue组件
 
 ```text
 <template>
@@ -228,7 +228,7 @@ ide会自动执行当前karma命令
 	}
 </style>
 ```
-##### TodoList测试用例
+#### TodoList测试用例
 新建文件test/unit/specs/TodoList.spec.js,内容如下:
 ```javascript
 import TodoList from '@/components/TodoList'
@@ -264,7 +264,7 @@ describe('TodoList.vue', () => {
 ```
 运行命令: `npm run unit`查看运行测试用例结果
 
-##### Todo.vue组件
+#### Todo.vue组件
 ```text
 <template>
 	<div class="todo">
@@ -306,7 +306,7 @@ describe('TodoList.vue', () => {
 </style>
 ```
 
-##### Todo测试用例
+#### Todo测试用例
 新建文件test/unit/specs/Todo.spec.js
 ```javascript
 import TodoList from '@/components/TodoList'
@@ -384,7 +384,7 @@ export default new Router({
 })
 ```
 
-#### 运行demo
+### 运行demo
 1. 运行命令: `npm run dev` 
 2. 打开浏览器输入: http://localhost:8080/todo ,查看当前demo运行结果
 

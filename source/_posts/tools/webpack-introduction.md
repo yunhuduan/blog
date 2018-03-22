@@ -7,7 +7,7 @@ categories:
 	- tools
 	- webpack
 ---
-### 简介
+## 简介
 本质上，webpack 是一个现代 JavaScript 应用程序的静态模块打包器(module bundler)。当 webpack 处理应用程序时，它会递归地构建一个**依赖关系图**(dependency graph)，其中包含应用程序需要的每个模块，然后将所有这些模块打包成一个或多个 bundle。
 它是高度可配置的，但是，在开始前你需要先理解四个核心概念：
 - 入口(entry)
@@ -17,7 +17,7 @@ categories:
 
 本系列所有的demo代码仓库地址:https://github.com/yunhuduan/webpack-demo
 
-### 入口
+## 入口
 
 入口起点(entry point)指示 webpack 应该使用哪个模块，来作为构建其内部依赖图的开始。进入入口起点后，webpack 会找出有哪些模块和库是入口起点（直接和间接）依赖的。
 
@@ -27,7 +27,7 @@ categories:
 
 <!-- more -->
 
-#### 单入口
+### 单入口
 ```text
 用法: entry: string|Array<string>
 ```
@@ -49,7 +49,8 @@ module.exports = {
 ```
 _当你向 entry 传入一个数组时会发生什么？向 entry 属性传入「文件路径(file path)数组」将创建“多个主入口(multi-main entry)”。
 在你想要多个依赖文件一起注入，并且将它们的依赖导向(graph)到一个“chunk”时，传入数组的方式就很有用。_ 
-#### 对象语法(多入口)
+
+### 对象语法(多入口)
 ```text
 用法：entry: {[entryChunkName: string]: string|Array<string>}
 ```
@@ -64,8 +65,8 @@ const config = {
 ```
 对象语法会比较繁琐。然而，这是应用程序中定义入口的最可扩展的方式。
 
-##### 常见场景
-1.分离应用程序和第三方库
+#### 常见场景
+##### 1.分离应用程序和第三方库
 **webpack.conf.js**
 ```javascript
 const config = {
@@ -78,7 +79,7 @@ const config = {
 这是什么？从表面上看，这告诉我们 webpack 从 app.js 和 vendors.js 开始创建依赖图(dependency graph)。这些依赖图是彼此完全分离、互相独立的（每个 bundle 中都有一个 webpack的**运行时代码**）。这种方式比较常见于，只有一个入口起点（不包括 vendor）的单页应用程序中。
 以上多入口可以使用CommonsChunkPlugin 将webpack的运行时代码提取成公用的chunk块中给页面引用,可以实现浏览器长期缓存(因为生成的chunk文件名基本不变)
 
-2.多页面应用
+##### 2.多页面应用
 **webpack.conf.js**
 ```javascript
 const config = {
@@ -95,7 +96,7 @@ const config = {
 
 使用 CommonsChunkPlugin 为每个页面间的应用程序共享代码(如:webpack运行时代码)创建 bundle。由于入口起点增多，多页应用能够复用入口起点之间的大量代码/模块，从而可以极大地从这些技术中受益。
 
-### 出口
+## 出口
 ```text
 用法: 在 webpack 中配置 output 属性的最低要求是，将它的值设置为一个对象，包括以下两点：
 1.filename 用于输出文件的文件名。
@@ -123,7 +124,7 @@ module.exports = {
 output.filename在多入口情况下可以使用[占位符](https://doc.webpack-china.org/configuration/output#output-filename)来确保文件具有唯一的名称
 
 
-#### 进阶设置
+### 进阶设置
 以下是使用 CDN 和资源 hash 的复杂示例：
 ```javascript
 output: {
@@ -133,7 +134,7 @@ output: {
 ```
 在编译时不知道最终输出文件的 publicPath 的情况下，publicPath 可以留空，并且在入口起点文件运行时动态设置。如果你在编译时不知道 publicPath，你可以先忽略
 
-### loader
+## loader
 loader 让 webpack 能够去处理那些非 JavaScript 文件（webpack 自身只理解 JavaScript）。loader 可以将所有类型的文件转换为 webpack 能够处理的有效模块，然后你就可以利用 webpack 的打包能力，对它们进行处理。
 
 本质上，webpack loader 将所有类型的文件，转换为应用程序的依赖图（和最终的 bundle）可以直接引用的模块。
@@ -166,7 +167,7 @@ module.exports = config;
 > “嘿，webpack 编译器，当你碰到「在 require()/import 语句中被解析为 '.txt' 的路径」时，
 在你对它打包之前，先使用 raw-loader 转换一下。”
 
-### 插件(plugins)
+## 插件(plugins)
 loader 被用于转换某些类型的模块，而插件则可以用于执行范围更广的任务。插件的范围包括，从打包优化和压缩，一直到重新定义环境中的变量。插件接口功能极其强大，可以用来处理各种各样的任务。
 想要使用一个插件，你只需要 require() 它，然后把它添加到 plugins 数组中。多数插件可以通过选项(option)自定义。你也可以在一个配置文件中因为不同目的而多次使用同一个插件，这时需要通过使用 new 操作符来创建它的一个实例。
 插件目的在于解决 loader 无法实现的其他事。
@@ -195,7 +196,7 @@ const config = {
 
 module.exports = config;
 ```
-#### 剖析
+### 剖析
 webpack 插件是一个具有 apply 属性的 JavaScript 对象。apply 属性会被 webpack compiler 调用，并且 compiler 对象可在整个编译生命周期访问。
 **ConsoleLogOnBuildWebpackPlugin.js**
 ```javascript
@@ -211,7 +212,7 @@ ConsoleLogOnBuildWebpackPlugin.prototype.apply = function(compiler) {
   });
 };
 ```
-### 模块解析
+## 模块解析
 resolver 是一个库(library)，用于帮助找到模块的绝对路径。一个模块可以作为另一个模块的依赖模块，然后被后者引用，如下：
 ```javascript
 import foo from 'path/to/module'
@@ -221,10 +222,10 @@ require('path/to/module')
 ```
 所依赖的模块可以是来自应用程序代码或第三方的库(library)。resolver 帮助 webpack 找到 bundle 中需要引入的模块代码，这些代码在包含在每个 require/import 语句中。 当打包模块时，webpack 使用 [enhanced-resolve](https://github.com/webpack/enhanced-resolve) 来解析文件路径
 
-#### webpack中解析规则
+### webpack中解析规则
 使用 enhanced-resolve，webpack 能够解析三种文件路径：
 
-##### 绝对路径
+#### 绝对路径
 ```javascript
 import "/home/me/file";
 
@@ -233,14 +234,14 @@ import "C:\\Users\\me\\file";
 ```
 由于我们已经取得文件的绝对路径，因此不需要进一步再做解析。
 
-##### 相对路径
+#### 相对路径
 ```javascript
 import "../src/file1";
 import "./file2";
 ```
 在这种情况下，使用 import 或 require 的资源文件(resource file)所在的目录被认为是上下文目录(context directory)。在 import/require 中给定的相对路径，会添加此上下文路径(context path)，以产生模块的绝对路径(absolute path)。
 
-##### 模块路径
+#### 模块路径
 ```javascript
 import "module";
 import "module/lib/file";
@@ -259,12 +260,12 @@ import "module/lib/file";
 - 文件扩展名通过 resolve.extensions 选项采用类似的方法进行解析。
 webpack 根据构建目标(build target)为这些选项提供了合理的默认配置。
 
-### 依赖图
+## 依赖图
 任何时候，一个文件依赖于另一个文件，webpack 就把此视为文件之间有依赖关系。这使得 webpack 可以接收非代码资源(non-code asset)（例如图像或 web 字体），并且可以把它们作为依赖提供给你的应用程序。
 
 webpack 从命令行或配置文件中定义的一个模块列表开始，处理你的应用程序。 从这些入口起点开始，webpack 递归地构建一个依赖图，这个依赖图包含着应用程序所需的每个模块，然后将所有这些模块打包为少量的 bundle - 通常只有一个 - 可由浏览器加载。
 
-### mainfest
+## mainfest
 在使用 webpack 构建的典型应用程序或站点中，有三种主要的代码类型：
 
 - 你或你的团队编写的源码。
@@ -272,3 +273,12 @@ webpack 从命令行或配置文件中定义的一个模块列表开始，处理
 - webpack 的 runtime 和 manifest，管理所有模块的交互。
 本文将重点介绍这三个部分中的最后部分，runtime 和 manifest。
 
+### runtime
+
+如上所述，我们这里只简略地介绍一下。runtime，以及伴随的 manifest 数据，主要是指：在浏览器运行时，webpack 用来连接模块化的应用程序的所有代码。runtime 包含：在模块交互时，连接模块所需的加载和解析逻辑。包括浏览器中的已加载模块的连接，以及懒加载模块的执行逻辑
+
+### manifest
+
+那么，一旦你的应用程序中，形如 index.html 文件、一些 bundle 和各种资源加载到浏览器中，会发生什么？你精心安排的 /src 目录的文件结构现在已经不存在，所以 webpack 如何管理所有模块之间的交互呢？这就是 manifest 数据用途的由来……
+
+当编译器(compiler)开始执行、解析和映射应用程序时，它会保留所有模块的详细要点。这个数据集合称为 "Manifest"，当完成打包并发送到浏览器时，会在运行时通过 Manifest 来解析和加载模块。无论你选择哪种模块语法，那些 import 或 require 语句现在都已经转换为 __webpack_require__ 方法，此方法指向模块标识符(module identifier)。通过使用 manifest 中的数据，runtime 将能够查询模块标识符，检索出背后对应的模块。

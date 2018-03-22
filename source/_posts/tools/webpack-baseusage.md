@@ -8,7 +8,7 @@ categories:
 	- webpack
 ---
 本文算是webpack的基本使用入门,如果刚接触建议先看下webpack的相关概念和介绍.{% post_link tools/webpack-introduction 点击这里 %}
-### 初始化项目
+## 初始化项目
 使用npm初始化项目,按照npm提示一步步输入自己的相关信息.
 ```bash
 	mkdir webpack-demo;
@@ -20,7 +20,7 @@ categories:
 	npm install --save-dev webpack@3.6
 ```
 <!-- more -->
-### 建立项目基本结构
+## 建立项目基本结构
 项目基本结构如下:
 ```text
 webpack-demo
@@ -32,7 +32,7 @@ webpack-demo
 - app.js:入口文件
 - webpack.conf.js:webpack配置文件
 
-### 基本配置
+## 基本配置
 我们编写下app.js中的文件内容如下:
 ```javascript
 document.getElementById('test').innerHTML = 'hello';
@@ -62,7 +62,7 @@ module.exports = {
 ```
 这时项目的simple目录中生成dist文件夹app.js文件内容为webpack编译后的内容,编译后的内容中存在**webpack运行时代码**和我们自己编写的代码
 
-### 配置项
+## 配置项
 以下是从官网拔下来常用的配置选项
 ```javascript
 const path = require('path');

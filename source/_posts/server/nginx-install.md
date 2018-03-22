@@ -7,19 +7,19 @@ categories:
 	- server
 	- nginx
 ---
-#### 官网下载
+### 官网下载
 1.直接下载.tar.gz安装包，地址：https://nginx.org/en/download.html
 
 2.使用wget命令下载(推荐)
 ```shell
 wget -c https://nginx.org/download/nginx-1.12.2.tar.gz
 ```
-#### 解压包(先移动到需要安装的目录)
+### 解压包(先移动到需要安装的目录)
 ```shell
 tar -xzvf nginx-1.12.2.tar.gz
 cd nginx-1.12.2
 ```
-#### 配置
+### 配置
 ```shell
 ./configure
 ```
@@ -27,7 +27,7 @@ cd nginx-1.12.2
 
 <!-- more -->
 
-#### 依赖环境包安装
+### 依赖环境包安装
 
 - gcc 安装
 安装 nginx 需要先将官网下载的源码进行编译，编译依赖 gcc 环境，如果没有 gcc 环境，则需要安装：
@@ -57,12 +57,12 @@ nginx 不仅支持 http 协议，还支持 https（即在ssl协议上传输http�
 ```shell
 yum install -y openssl openssl-devel
 ```
-#### 编译安装
+### 编译安装
 ```shell
 make
 make install
 ```
-#### 检测安装是否成功
+### 检测安装是否成功
 1.找到Nginx安装目录
 ```shell
 whereis nginx
@@ -72,12 +72,12 @@ whereis nginx
 ```shell
 sh /usr/local/nginx/sbin/nginx -v
 ```
-#### 启动Nginx
+### 启动Nginx
 ```shell
 cd /usr/local/nginx
 ./sbin/nginx
 ```
-#### nginx常用命令
+### nginx常用命令
 ./nginx 
 
 ./nginx -s stop

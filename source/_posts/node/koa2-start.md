@@ -7,10 +7,10 @@ categories:
 	- node
 	- koa2
 ---
-### koa简介
+## koa简介
 > koa是一个新的web框架是由express作者设计,其目的是更小、更具表现力和更健壮的Web应用程序。
 
-### 安装
+## 安装
 koa2需要安装node在V7.6.0及以上版本支持es2015 和async函数;至于管理node版本工具自行百度如:nv等工具;
 koa2安装建议安装到实际的项目中
 ```shell
@@ -18,7 +18,7 @@ koa2安装建议安装到实际的项目中
 ```
 
 <!-- more -->
-### 使用 Babel 实现 Async 方法
+## 使用 Babel 实现 Async 方法
 要在 node < 7.6 版本的 Koa 中使用 async 方法, 我们推荐使用 [babel's require hook][1].
 ```javascript
 require('babel-register');
@@ -32,7 +32,7 @@ const app = require('./app');
   "plugins": ["transform-async-to-generator"]
 }
 ```
-### 应用程序
+## 应用程序
 Koa 应用程序是一个包含一组中间件函数的对象，它是按照类似堆栈的方式组织和执行的。 Koa 类似于你可能遇到过的许多其他中间件系统，例如 Ruby 的 Rack ，Connect 等，然而，一个关键的设计点是在其低级中间件层中提供高级“语法糖”。 这提高了互操作性，稳健性，并使书写中间件更加愉快。
 
 这包括诸如内容协商，缓存清理，代理支持和重定向等常见任务的方法。 尽管提供了相当多的有用的方法 Koa 仍保持了一个很小的体积，因为没有捆绑中间件。
@@ -48,7 +48,7 @@ app.use(async ctx => {
 app.listen(3000);
 ```
 
-### 中间件
+## 中间件
 Koa 中间件以更传统的方式级联，您可能习惯使用类似的工具 - 之前难以让用户友好地使用 node 的回调。然而，使用 async 功能，我们可以实现 “真实” 的中间件。对比 Connect 的实现，通过一系列功能直接传递控制，直到一个返回，Koa 调用“下游”，然后控制流回“上游”。
 
 下面以 “Hello World” 的响应作为示例，首先请求流通过 x-response-time 和 logging 中间件来请求何时开始，然后继续移交控制给 response 中间件。当一个中间件调用 next() 则该函数暂停并将控制传递给定义的下一个中间件。当在下游没有更多的中间件执行后，堆栈将展开并且每个中间件恢复执行其上游行为。
@@ -83,13 +83,13 @@ app.use(async ctx => {
 app.listen(3000);
 ```
 
-### 设置
+## 设置
 应用程序设置是 app 实例上的属性，目前支持如下：
 - app.env 默认是 NODE_ENV 或 "development"
 - app.proxy 当真正的代理头字段将被信任时
 - app.subdomainOffset 对于要忽略的 .subdomains 偏移
 
-### app.listen(...)
+## app.listen(...)
 Koa 应用程序不是 HTTP 服务器的1对1展现。 可以将一个或多个 Koa 应用程序安装在一起以形成具有单个HTTP服务器的更大应用程序。
 创建并返回 HTTP 服务器，将给定的参数传递给 Server#listen()。这些内容都记录在 nodejs.org.
 以下是一个无作用的 Koa 应用程序被绑定到 3000 端口：
@@ -116,13 +116,13 @@ http.createServer(app.callback()).listen(3000);
 https.createServer(app.callback()).listen(3001);
 
 ```
-### app.callback()
+## app.callback()
 返回适用于 http.createServer() 方法的回调函数来处理请求。你也可以使用此回调函数将 koa 应用程序挂载到 Connect/Express 应用程序中。
 
-### app.use(function)
+## app.use(function)
 将给定的中间件方法添加到此应用程序。参阅 [Middleware][4] 获取更多信息.
 
-### app.keys=
+## app.keys=
 设置签名的 Cookie 密钥。
 
 这些被传递给 KeyGrip，但是你也可以传递你自己的 KeyGrip 实例。
@@ -137,7 +137,7 @@ app.keys = new KeyGrip(['im a newer secret', 'i like turtle'], 'sha256');
 ctx.cookies.set('name', 'tobi', { signed: true });
 ```
 
-### app.context
+## app.context
 app.context 是从其创建 ctx 的原型。您可以通过编辑 app.context 为 ctx 添加其他属性。这对于将 ctx 添加到整个应用程序中使用的属性或方法非常有用，这可能会更加有效（不需要中间件）和/或 更简单（更少的 require()），而更多地依赖于ctx，这可以被认为是一种反模式。
 
 例如，要从 ctx 添加对数据库的引用：
@@ -152,7 +152,7 @@ app.use(async ctx => {
 
 - ctx 上的许多属性都是使用 getter ，setter 和 Object.defineProperty() 定义的。你只能通过在 app.context 上使用 Object.defineProperty() 来编辑这些属性（不推荐）。查阅 https://github.com/koajs/koa/issues/652.
 - 安装的应用程序目前使用其父级的 ctx 和设置。 因此，安装的应用程序只是一组中间件。
-### 错误处理
+## 错误处理
 默认情况下，将所有错误输出到 stderr，除非 app.silent 为 true。 当 err.status 是 404 或 err.expose 是 true 时默认错误处理程序也不会输出错误。 要执行自定义错误处理逻辑，如集中式日志记录，您可以添加一个 “error” 事件侦听器：
 ```javascript
 app.on('error', err => {
@@ -169,7 +169,7 @@ app.on('error', (err, ctx) => {
 
 当发生错误 并且 仍然可以响应客户端时，也没有数据被写入 socket 中，Koa 将用一个 500 “内部服务器错误” 进行适当的响应。在任一情况下，为了记录目的，都会发出应用级 “错误”。
 
-### 上下文(Context)
+## 上下文(Context)
 Koa Context 将 node 的 request 和 response 对象封装到单个对象中，为编写 Web 应用程序和 API 提供了许多有用的方法。 这些操作在 HTTP 服务器开发中频繁使用，它们被添加到此级别而不是更高级别的框架，这将强制中间件重新实现此通用功能。
 
 每个 请求都将创建一个 Context，并在中间件中作为接收器引用，或者 ctx 标识符，如以下代码片段所示：
@@ -183,12 +183,12 @@ app.use(async ctx => {
 
 为方便起见许多上下文的访问器和方法直接委托给它们的 ctx.request或 ctx.response ，不然的话它们是相同的。 例如 ctx.type 和 ctx.length 委托给 response 对象，ctx.path 和 ctx.method 委托给 request。
 
-### API Context 具体方法和访问器.
+## API Context 具体方法和访问器.
 
-#### ctx.req
+### ctx.req
 Node 的 request 对象.
 
-#### ctx.res
+### ctx.res
 Node 的 response 对象.
 
 绕过 Koa 的 response 处理是 不被支持的. 应避免使用以下 node 属性：
@@ -197,28 +197,29 @@ Node 的 response 对象.
 - res.writeHead()
 - res.write()
 - res.end()
-#### ctx.request
+
+### ctx.request
 koa 的 Request 对象.
 
-#### ctx.response
+### ctx.response
 koa 的 Response 对象.
 
-#### ctx.state
+### ctx.state
 推荐的命名空间，用于通过中间件传递信息和你的前端视图。
 ```javascript
 ctx.state.user = await User.find(id);
 ```
 
-#### ctx.app
+### ctx.app
 应用程序实例引用
 
-#### ctx.cookies.get(name, [options])
+### ctx.cookies.get(name, [options])
 通过 options 获取 cookie name:
 
 - signed 所请求的cookie应该被签名
 koa 使用 cookies 模块，其中只需传递参数。
 
-#### ctx.cookies.set(name, value, [options])
+### ctx.cookies.set(name, value, [options])
 通过 options 设置 cookie name 的 value :
 
 - maxAge 一个数字表示从 Date.now() 得到的毫秒数
@@ -231,7 +232,7 @@ koa 使用 cookies 模块，其中只需传递参数。
 - overwrite 一个布尔值，表示是否覆盖以前设置的同名的 cookie (默认是 false). 如果是 true, 在同一个请求中设置相同名称的所有 Cookie（不管路径或域）是否在设置此Cookie 时从 Set-Cookie 标头中过滤掉。
 koa 使用传递简单参数的 cookies 模块。
 
-#### ctx.throw([status], [msg], [properties])
+### ctx.throw([status], [msg], [properties])
 Helper 方法抛出一个 .status 属性默认为 500 的错误，这将允许 Koa 做出适当地响应。
 
 允许以下组合：
@@ -258,18 +259,18 @@ ctx.throw(401, 'access_denied', { user: user });
 
 koa 使用 http-errors 来创建错误。
 
-#### ctx.assert(value, [status], [msg], [properties])
+### ctx.assert(value, [status], [msg], [properties])
 当 !value 时，Helper 方法抛出类似于 .throw() 的错误。这与 node 的 assert() 方法类似.
 
-#### ctx.assert(ctx.state.user, 401, 'User not found. Please login!');
+### ctx.assert(ctx.state.user, 401, 'User not found. Please login!');
 koa 使用 http-assert 作为断言。
 
-#### ctx.respond
+### ctx.respond
 为了绕过 Koa 的内置 response 处理，你可以显式设置 ctx.respond = false;。 如果您想要写入原始的 res 对象而不是让 Koa 处理你的 response，请使用此参数。
 
 请注意，Koa 不 支持使用此功能。这可能会破坏 Koa 中间件和 Koa 本身的预期功能。使用这个属性被认为是一个 hack，只是便于那些希望在 Koa 中使用传统的 fn(req, res) 功能和中间件的人。
 
-### Request 别名
+## Request 别名
 以下访问器和 Request 别名等效：
 
 - ctx.header
@@ -303,111 +304,111 @@ koa 使用 http-assert 作为断言。
 - ctx.acceptsCharsets()
 - ctx.acceptsLanguages()
 - ctx.get()
-### Response 别名
+## Response 别名
 以下访问器和 Response 别名等效：
 
--- ctx.body
--- ctx.body=
--- ctx.status
--- ctx.status=
--- ctx.message
--- ctx.message=
--- ctx.length=
--- ctx.length
--- ctx.type=
--- ctx.type
--- ctx.headerSent
--- ctx.redirect()
--- ctx.attachment()
--- ctx.set()
--- ctx.append()
--- ctx.remove()
--- ctx.lastModified=
--- ctx.etag=
-### 请求(Request)
+- ctx.body
+- ctx.body=
+- ctx.status
+- ctx.status=
+- ctx.message
+- ctx.message=
+- ctx.length=
+- ctx.length
+- ctx.type=
+- ctx.type
+- ctx.headerSent
+- ctx.redirect()
+- ctx.attachment()
+- ctx.set()
+- ctx.append()
+- ctx.remove()
+- ctx.lastModified=
+- ctx.etag=
+## 请求(Request)
 Koa Request 对象是在 node 的 vanilla 请求对象之上的抽象，提供了诸多对 HTTP 服务器开发有用的功能。
 
-#### API
-#### request.header
+### API
+### request.header
 请求标头对象。
 
-#### request.header=
+### request.header=
 设置请求标头对象。
 
-#### request.headers
+### request.headers
 请求标头对象。别名为 request.header.
 
-#### request.headers=
+### request.headers=
 设置请求标头对象。别名为 request.header=.
 
-#### request.method
+### request.method
 请求方法。
 
-#### request.method=
+### request.method=
 设置请求方法，对于实现诸如 methodOverride() 的中间件是有用的。
 
-#### request.length
+### request.length
 返回以数字返回请求的 Content-Length，或 undefined。
 
-#### request.url
+### request.url
 获取请求 URL.
 
-#### request.url=
+### request.url=
 设置请求 URL, 对 url 重写有用。
 
-#### request.originalUrl
+### request.originalUrl
 获取请求原始URL。
 
-#### request.origin
+### request.origin
 获取URL的来源，包括 protocol 和 host。
 
 ctx.request.origin
 // => http://example.com
-#### request.href
+### request.href
 获取完整的请求URL，包括 protocol，host 和 url。
 
 ctx.request.href;
 // => http://example.com/foo/bar?q=1
-#### request.path
+### request.path
 获取请求路径名。
 
-#### request.path=
+### request.path=
 设置请求路径名，并在存在时保留查询字符串。
 
-#### request.querystring
+### request.querystring
 根据 ? 获取原始查询字符串.
 
-#### request.querystring=
+### request.querystring=
 设置原始查询字符串。
 
-#### request.search
+### request.search
 使用 ? 获取原始查询字符串。
 
-#### request.search=
+### request.search=
 设置原始查询字符串。
 
-#### request.host
+### request.host
 获取当前主机（hostname:port）。当 app.proxy 是 true 时支持 X-Forwarded-Host，否则使用 Host。
 
-#### request.hostname
+### request.hostname
 存在时获取主机名。当 app.proxy 是 true 时支持 X-Forwarded-Host，否则使用 Host。
 
 如果主机是 IPv6, Koa 解析到 WHATWG URL API, 注意 这可能会影响性能。
 
-#### request.URL
+### request.URL
 获取 WHATWG 解析的 URL 对象。
 
-#### request.type
+### request.type
 获取请求 Content-Type 不含参数 "charset"。
 
 const ct = ctx.request.type;
 // => "image/png"
-#### request.charset
+### request.charset
 在存在时获取请求字符集，或者 undefined：
 
 ctx.request.charset;
 // => "utf-8"
-#### request.query
+### request.query
 获取解析的查询字符串, 当没有查询字符串时，返回一个空对象。请注意，此 getter 不 支持嵌套解析。
 
 例如 "color=blue&size=small":
@@ -416,11 +417,11 @@ ctx.request.charset;
   color: 'blue',
   size: 'small'
 }
-#### request.query=
+### request.query=
 将查询字符串设置为给定对象。 请注意，此 setter 不 支持嵌套对象。
 
 ctx.query = { next: '/login' };
-#### request.fresh
+### request.fresh
 检查请求缓存是否“新鲜”，也就是内容没有改变。此方法用于 If-None-Match / ETag, 和 If-Modified-Since 和 Last-Modified 之间的缓存协商。 在设置一个或多个这些响应头后应该引用它。
 
 // 新鲜度检查需要状态20x或304
@@ -436,22 +437,22 @@ if (ctx.fresh) {
 // 缓存是陈旧的
 // 获取新数据
 ctx.body = await db.find('something');
-#### request.stale
+### request.stale
 相反与 request.fresh.
 
-#### request.protocol
+### request.protocol
 返回请求协议，“https” 或 “http”。当 app.proxy 是 true 时支持 X-Forwarded-Proto。
 
-#### request.secure
+### request.secure
 通过 ctx.protocol == "https" 来检查请求是否通过 TLS 发出。
 
-#### request.ip
+### request.ip
 请求远程地址。 当 app.proxy 是 true 时支持 X-Forwarded-Proto。
 
-#### request.ips
+### request.ips
 当 X-Forwarded-For 存在并且 app.proxy 被启用时，这些 ips 的数组被返回，从上游 - >下游排序。 禁用时返回一个空数组。
 
-#### request.subdomains
+### request.subdomains
 将子域返回为数组。
 
 子域是应用程序主域之前主机的点分隔部分。默认情况下，应用程序的域名假定为主机的最后两个部分。这可以通过设置 app.subdomainOffset 来更改。
@@ -460,7 +461,7 @@ ctx.body = await db.find('something');
 
 如果 app.subdomainOffset 未设置, ctx.subdomains 是 ["ferrets", "tobi"]. 如果 app.subdomainOffset 是 3, ctx.subdomains 是 ["tobi"].
 
-#### request.is(types...)
+### request.is(types...)
 检查传入请求是否包含 Content-Type 头字段， 并且包含任意的 mime type。 如果没有请求主体，返回 null。 如果没有内容类型，或者匹配失败，则返回 false。 反之则返回匹配的 content-type。
 ```javascript
 // 使用 Content-Type: text/html; charset=utf-8
@@ -483,7 +484,7 @@ if (ctx.is('image/*')) {
 }
 ```
 
-### 内容协商
+## 内容协商
 Koa的 request 对象包括由 accepts 和 negotiator 提供的有用的内容协商实体。
 
 这些实用程序是：
@@ -498,7 +499,7 @@ Koa的 request 对象包括由 accepts 和 negotiator 提供的有用的内容�
 
 如果接收到任何类型的接收头，则会返回第一个类型。 因此，你提供的类型的顺序很重要。
 
-#### request.accepts(types)
+### request.accepts(types)
 检查给定的 type(s) 是否可以接受，如果 true，返回最佳匹配，否则为 false。 type 值可能是一个或多个 mime 类型的字符串，如 application/json，扩展名称如 json，或数组 ["json", "html", "text/plain"]。
 ```javascript
 // Accept: text/html
@@ -542,7 +543,7 @@ switch (ctx.accepts('json', 'html', 'text')) {
   default: ctx.throw(406, 'json, html, or text only');
 }
 ```
-#### request.acceptsEncodings(encodings)
+### request.acceptsEncodings(encodings)
 检查 encodings 是否可以接受，返回最佳匹配为 true，否则为 false。 请注意，您应该将identity 作为编码之一！
 
 ```javascript
@@ -559,7 +560,7 @@ ctx.acceptsEncodings();
 // => ["gzip", "deflate", "identity"]
 ```
 请注意，如果客户端显式地发送 identity;q=0，那么 identity 编码（这意味着没有编码）可能是不可接受的。 虽然这是一个边缘的情况，你仍然应该处理这种方法返回 false 的情况。
-#### request.acceptsCharsets(charsets)
+### request.acceptsCharsets(charsets)
 
 检查 charsets 是否可以接受，在 true 时返回最佳匹配，否则为 false。
 
@@ -576,7 +577,7 @@ ctx.acceptsCharsets(['utf-7', 'utf-8']);
 ctx.acceptsCharsets();
 // => ["utf-8", "utf-7", "iso-8859-1"]
 ```
-#### request.acceptsLanguages(langs)
+### request.acceptsLanguages(langs)
 检查 langs 是否可以接受，如果为 true，返回最佳匹配，否则为 false。
 ```javascript
 // Accept-Language: en;q=0.8, es, pt
@@ -593,32 +594,32 @@ ctx.acceptsLanguages();
 // => ["es", "pt", "en"]
 ```
 
-#### request.idempotent
+### request.idempotent
 检查请求是否是幂等的。
 
-#### request.socket
+### request.socket
 返回请求套接字。
 
-#### request.get(field)
+### request.get(field)
 返回请求标头。
 
-### 响应(Response)
+## 响应(Response)
 Koa Response 对象是在 node 的 vanilla 响应对象之上的抽象，提供了诸多对 HTTP 服务器开发有用的功能。
 
 API
-#### response.header
+### response.header
 响应标头对象。
 
-#### response.headers
+### response.headers
 响应标头对象。别名是 response.header。
 
-#### response.socket
+### response.socket
 请求套接字。
 
-#### response.status
+### response.status
 获取响应状态。默认情况下，response.status 设置为 404 而不是像 node 的 res.statusCode 那样默认为 200。
 
-#### response.status=
+### response.status=
 通过数字代码设置响应状态：
 - 100 "continue"
 - 101 "switching protocols"
@@ -680,22 +681,22 @@ API
 - 511 "network authentication required"
 注意: 不用太在意记住这些字符串, 如果你写错了,可以查阅这个列表随时更正.
 
-#### response.message
+### response.message
 获取响应的状态消息. 默认情况下, response.message 与 response.status 关联.
 
-#### response.message=
+### response.message=
 将响应的状态消息设置为给定值。
 
-#### response.length=
+### response.length=
 将响应的 Content-Length 设置为给定值。
 
-#### response.length
+### response.length
 以数字返回响应的 Content-Length，或者从ctx.body推导出来，或者undefined。
 
-#### response.body
+### response.body
 获取响应主体。
 
-#### response.body=
+### response.body=
 将响应体设置为以下之一：
 
 - string 写入
@@ -705,13 +706,13 @@ API
 - null 无内容响应
 如果 response.status 未被设置, Koa 将会自动设置状态为 200 或 204。
 
-##### String
+#### String
 Content-Type 默认为 text/html 或 text/plain, 同时默认字符集是 utf-8。Content-Length 字段也是如此。
 
-##### Buffer
+#### Buffer
 Content-Type 默认为 application/octet-stream, 并且 Content-Length 字段也是如此。
 
-##### Stream
+#### Stream
 Content-Type 默认为 application/octet-stream。
 
 每当流被设置为响应主体时，.onerror 作为侦听器自动添加到 error 事件中以捕获任何错误。此外，每当请求关闭（甚至过早）时，流都将被销毁。如果你不想要这两个功能，请勿直接将流设为主体。例如，当将主体设置为代理中的 HTTP 流时，你可能不想要这样做，因为它会破坏底层连接。
@@ -727,16 +728,16 @@ app.use(async ctx => {
   ctx.body = someHTTPStream.on('error', ctx.onerror).pipe(PassThrough());
 });
 ```
-##### Object
+#### Object
 Content-Type 默认为 application/json. 这包括普通的对象 { foo: 'bar' } 和数组 ['foo', 'bar']。
 
-#### response.get(field)
+### response.get(field)
 不区分大小写获取响应标头字段值 field。
 ```javascript
 const etag = ctx.response.get('ETag');
 
 ```
-#### response.set(field, value)
+### response.set(field, value)
 设置响应标头 field 到 value:
 ```javascript
 ctx.set('Cache-Control', 'no-cache');
@@ -762,14 +763,14 @@ ctx.set({
 ```javascript
 response.remove(field)
 ```
-#### response.type
+### response.type
 获取响应 Content-Type 不含参数 "charset"。
 
 ```javascript
 const ct = ctx.type;
 // => "image/png"
 ```
-#### response.type=
+### response.type=
 设置响应 Content-Type 通过 mime 字符串或文件扩展名。
 
 ```javascript
@@ -780,7 +781,7 @@ ctx.type = 'png';
 ```
 注意: 在适当的情况下为你选择 charset, 比如 response.type = 'html' 将默认是 "utf-8". 如果你想覆盖 charset, 使用 ctx.set('Content-Type', 'text/html') 将响应头字段设置为直接值。
 
-#### response.is(types...)
+### response.is(types...)
 非常类似 ctx.request.is(). 检查响应类型是否是所提供的类型之一。这对于创建操纵响应的中间件特别有用。
 
 例如, 这是一个中间件，可以削减除流之外的所有HTML响应。
@@ -800,7 +801,7 @@ app.use(async (ctx, next) => {
   ctx.body = minify(body);
 });
 ```
-#### response.redirect(url, [alt])
+### response.redirect(url, [alt])
 执行 [302] 重定向到 url.
 
 字符串 “back” 是特别提供Referrer支持的，当Referrer不存在时，使用 alt 或“/”。
@@ -817,27 +818,27 @@ ctx.status = 301;
 ctx.redirect('/cart');
 ctx.body = 'Redirecting to shopping cart';
 ```
-#### response.attachment([filename])
+### response.attachment([filename])
 将 Content-Disposition 设置为 “附件” 以指示客户端提示下载。(可选)指定下载的 filename。
 
-#### response.headerSent
+### response.headerSent
 检查是否已经发送了一个响应头。 用于查看客户端是否可能会收到错误通知。
 
-#### response.lastModified
+### response.lastModified
 将 Last-Modified 标头返回为 Date, 如果存在。
 
-#### response.lastModified=
+### response.lastModified=
 将 Last-Modified 标头设置为适当的 UTC 字符串。您可以将其设置为 Date 或日期字符串。
 
 ctx.response.lastModified = new Date();
-#### response.etag=
+### response.etag=
 设置包含 " 包裹的 ETag 响应， 请注意，没有相应的 response.etag getter。
 
 ctx.response.etag = crypto.createHash('md5').update(ctx.body).digest('hex');
-#### response.vary(field)
+### response.vary(field)
 在 field 上变化。
 
-#### response.flushHeaders()
+### response.flushHeaders()
 刷新任何设置的标头，并开始主体。
 
 
