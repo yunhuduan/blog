@@ -28,16 +28,36 @@ loader有三种使用方式:
 
 ## loader配置事例
 
+### css-loader&style-loader
+
 我们还是使用webpack-demo中simple目录下代码演示,先安装style-loader,css-loader
+
+css/index.css代码如下:
+```css
+body {
+    background-color: gray;
+}
+
+#test {
+    font-size: 20px;
+    color: #333333;
+    font-style: italic;
+}
+```
+
+
 在app.js中修改如下:
 ```javascript
 import './css/index.css'//添加引入css
 
-var p = document.createElement('p');
-p.innerHTML = "hello webpack";
+let testFunc = (str1, str2) => {
+	return str1 + ',' + str2
+}
+
+let p = document.createElement('p');
+p.innerHTML = "hello webpack," + testFunc('p1','p2');
 p.setAttribute("id", "test");
 document.body.appendChild(p);
-
 ```
 修改webpack.config.js如下:
 ```javascript
@@ -69,8 +89,31 @@ module.exports = {
 cd simple
 ../node_modules/.bin/webpack
 ```
+打开simple/dist目录下的index.html文件可以看到背景颜色变了id为test的p标签样式也正确,然后再控制台的element中查看元素head
+中存在style的内容正是index.css中内容;
+css-loader:将css文件中的import或者url等抓换成base64或者合并导入文件
+style-loader:将css内容写入到html的头部
 
+### babel-loader
+由上面的事例我们看到我们打包完成的js中还是es6的语法,我们需要使用另外一个loader来将es6转换成es5,安装babel-loader,babel-core,babel-preset-env
 
+```bash
+npm install -D babel-loader babel-core babel-preset-env 
+```
+在webpack.config.js中的rules中添加如下loader配置:
+```javascript
+{
+	test: /\.js$/,
+	exclude: /(node_modules|bower_components)/,
+	use: {
+		loader: 'babel-loader',
+		options: {
+			presets: ['env']
+		}
+	}
+}
 
+```
+然后再执行命令查看dist目录下的app.js中的代码是否已经是es5
 
 
