@@ -78,6 +78,9 @@ class Snake extends Animal {
 - 添加babel-polyfill(需要安装),然后在入口文件顶部 import "babel-polyfill"就好了;
 - 使用babel-runtime,babel-plugin-transform-runtime 来搞定(推荐)
 
+参考文档: http://babeljs.io/docs/plugins/transform-runtime/
+https://babeljs.cn/docs/usage/polyfill/
+
 #### 转换新的api
 安装babel-runtime,babel-plugin-transform-runtime
 ```bash
