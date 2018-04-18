@@ -1,0 +1,6 @@
+language: node_js
+install: npm install && npm install -g hexo
+script:
+  - hexo clean
+  - hexo g
+  - hexo deploy
