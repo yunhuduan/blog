@@ -7,5 +7,6 @@
 	postcss,
 	css处理器,
 	webpack,
+	babel,
 	eslint
 	

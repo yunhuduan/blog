@@ -15,5 +15,6 @@
 	tools
 		webpack
 		eslint
+		babel
 	
 	
